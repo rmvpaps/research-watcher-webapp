@@ -21,9 +21,9 @@ phases:
       - echo Syncing build artifacts to S3...
       # Syncs only the contents of the 'dist' folder (Vite) or 'build' folder (CRA) to S3
       # --delete removes files in S3 that are no longer present in your new build code
-      - aws s3 sync dist/ s3://$DEPLOY_BUCKET --delete
+      - aws s3 sync build/ s3://$DEPLOY_BUCKET --delete
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist # Tracks the output directory path
+  base-directory: build # Tracks the output directory path
