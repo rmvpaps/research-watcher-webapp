@@ -1,0 +1,22 @@
+.article-grid{
+
+}
+
+.article-item{
+    margin-top : 20px
+}
+
+.Listing {
+    margin-left : 30px;
+    margin-right: 30px;
+    padding: 20px;
+}
+
+.filterbox {
+    marginBottom: 20px;
+    display: flex;
+    gap: 10px;
+    max-width: 50%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+}
