@@ -1,13 +1,126 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import 'material-symbols/outlined.css';
+@import "tailwindcss";
+
+
+
+@theme {
+
+
+
+  /* Dark Mode Variant Setup */
+    --variant-dark: (&:where(.dark, .dark *));
+
+    /* Colors */
+    --color-primary: #00478d;
+    --color-surface-container: #eaeef2;
+    --color-primary-container: #005eb8;
+    --color-secondary-container: #b9dbfe;
+    --color-secondary-fixed-dim: #a8caed;
+    --color-on-primary-fixed: #001b3d;
+    --color-on-secondary-container: #3f607f;
+    --color-tertiary-fixed: #d5e3ff;
+    --color-surface-tint: #005db6;
+    --color-error: #ba1a1a;
+    --color-on-tertiary-container: #c8dbff;
+    --color-surface-dim: #d6dade;
+    --color-surface: #F0F4F8;
+    --color-inverse-surface: #2c3134;
+    --color-on-tertiary-fixed-variant: #254777;
+    --color-outline-blue: #D1DBE5;
+    --color-inverse-primary: #a9c7ff;
+    --color-accent-teal: #00828C;
+    --color-secondary-fixed: #cee5ff;
+    --color-on-surface-variant: #424752;
+    --color-inverse-on-surface: #edf1f5;
+    --color-on-secondary: #ffffff;
+    --color-on-surface: #101D2D;
+    --color-tertiary-fixed-dim: #a8c8ff;
+    --color-surface-container-high: #e4e9ed;
+    --color-on-tertiary: #ffffff;
+    --color-surface-bright: #f6fafe;
+    --color-outline: #727783;
+    --color-on-secondary-fixed-variant: #274967;
+    --color-on-primary-fixed-variant: #00468c;
+    --color-on-error: #ffffff;
+    --color-on-primary: #ffffff;
+    --color-secondary: #406180;
+    --color-primary-fixed: #d6e3ff;
+    --color-on-secondary-fixed: #001d32;
+    --color-tertiary: #254878;
+    --color-on-error-container: #93000a;
+    --color-on-primary-container: #c8daff;
+    --color-surface-variant: #dfe3e7;
+    --color-background: #f6fafe;
+    --color-primary-fixed-dim: #a9c7ff;
+    --color-on-background: #171c1f;
+    --color-on-tertiary-fixed: #001b3c;
+    --color-outline-variant: #c2c6d4;
+    --color-surface-container-low: #f0f4f8;
+    --color-tertiary-container: #3f6091;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-highest: #dfe3e7;
+    --color-error-container: #ffdad6;
+
+    /* Border Radius */
+    --radius-default: 0.125rem;
+    --radius-lg: 0.25rem;
+    --radius-xl: 0.5rem;
+    --radius-full: 0.75rem;
+
+    /* Spacing */
+    --spacing-gutter: 24px;
+    --spacing-unit: 4px;
+    --spacing-container-max: 1200px;
+    --spacing-stack-gap: 32px;
+    --spacing-list-item-padding: 20px;
+    --spacing-margin-mobile: 16px;
+
+    /* Font Families */
+    --font-label-caps: "JetBrains Mono";
+    --font-body-lg: "Inter";
+    --font-meta-sm: "Inter";
+    --font-headline-sm: "Inter";
+    --font-headline-md-mobile: "Inter";
+    --font-body-md: "Inter";
+    --font-headline-md: "Inter";
+    --font-display-lg: "Inter";
+
+    /* Font Sizes (with integrated Line Heights & Letter Spacing) */
+    --text-label-caps: 12px;
+    --text-label-caps--line-height: 16px;
+    --text-label-caps--letter-spacing: 0.05em;
+    --text-label-caps--font-weight: 500;
+
+    --text-body-lg: 16px;
+    --text-body-lg--line-height: 26px;
+    --text-body-lg--font-weight: 400;
+
+    --text-meta-sm: 12px;
+    --text-meta-sm--line-height: 16px;
+    --text-meta-sm--font-weight: 500;
+
+    --text-headline-sm: 18px;
+    --text-headline-sm--line-height: 24px;
+    --text-headline-sm--font-weight: 600;
+
+    --text-headline-md-mobile: 20px;
+    --text-headline-md-mobile--line-height: 28px;
+    --text-headline-md-mobile--font-weight: 600;
+
+    --text-body-md: 14px;
+    --text-body-md--line-height: 22px;
+    --text-body-md--font-weight: 400;
+
+    --text-headline-md: 24px;
+    --text-headline-md--line-height: 32px;
+    --text-headline-md--letter-spacing: -0.01em;
+    --text-headline-md--font-weight: 600;
+
+    --text-display-lg: 36px;
+    --text-display-lg--line-height: 44px;
+    --text-display-lg--letter-spacing: -0.02em;
+    --text-display-lg--font-weight: 700;
+
+    --background-image-hero-pattern: url('assets/brandi-redd-aJTiW00qqtI-unsplash.jpg');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

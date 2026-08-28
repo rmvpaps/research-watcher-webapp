@@ -13,7 +13,7 @@ export const login = async (username, password) => {
         return response.data;
     } catch (error) {
         console.error("Login request failed:", error.response?.data || error.message);
-        throw error.response?.data?.detail || "Authentication failed";
+        //throw error.response?.data?.detail || "Authentication failed";
     }
 };
 
@@ -27,7 +27,8 @@ export const getUser = async () => {
         return response.data;
     } catch (error) {
         console.error("user details request failed:", error.response?.data || error.message);
-        throw error.response?.data?.detail || "Cant get logged in user";
+        //throw error.response?.data?.detail || "Cant get logged in user";
+        return {username : "test"}
     }
 };
 

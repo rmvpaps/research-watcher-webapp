@@ -1,0 +1,6 @@
+{
+  "api_url": "https://example.com/api/",
+  "teamName":"V-Ton",
+  "desc" : "Identify and analyze the latest research publications in Virtual Try on, 3D human parametric modelling, 3D scene reconstruction to keep youself up-to-date and get help from AI librarian Agent to understand trends and subject matter.",
+   "githublink": "https://github.com/rmvpaps/vton-research-watcher"
+}
