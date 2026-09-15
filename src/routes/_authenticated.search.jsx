@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Login from '../components/login'
-import Stats from '../components/stats'
+import Stats from '@/components/stats'
 import PropTypes from 'prop-types';
 import { createFileRoute } from '@tanstack/react-router'
 import configData from "../config.json";
@@ -14,7 +13,7 @@ function Landing() {
     <div className='bg-white mx-auto w-full max-w-6xl flex-grow flex items-center justify-center p-margin-mobile md:p-gutter shadow-2xl'>
       <main className="flex-grow flex items-center justify-center p-margin-mobile md:p-gutter">
         <div className="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter items-center min-h-[calc(100vh-64px-32px)]">
-
+          <h1>DUMMY!!!!!!!!!!!!!!</h1>
           <div className="col-span-1 md:col-span-7 flex flex-col gap-stack-gap">
             <div className="flex flex-col gap-4">
               <h1 className="font-display-lg text-display-lg text-primary md:font-display-lg md:text-display-lg text-headline-lg-mobile font-headline-lg-mobile">{teamName} - ResearchWatcher</h1>
@@ -35,7 +34,7 @@ function Landing() {
           </div>
           
           
-          <Login/>
+
 
         </div>
       </main>
@@ -44,7 +43,7 @@ function Landing() {
   )
 }
 
-export const Route = createFileRoute('/search')({
+export const Route = createFileRoute('/_authenticated/search')({
   component: Landing,
 })
 

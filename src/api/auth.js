@@ -1,4 +1,5 @@
 import apiClient from './apiClient';
+import {jwtDecode} from 'jwt-decode';
 
 export const login = async (username, password) => {
     try {
@@ -9,11 +10,15 @@ export const login = async (username, password) => {
 
         // Save the asset string safely in the browser context layer
         localStorage.setItem('token', access_token);
+        
 
-        return response.data;
+        const user = await getUser()
+
+        return user
+
     } catch (error) {
         console.error("Login request failed:", error.response?.data || error.message);
-        //throw error.response?.data?.detail || "Authentication failed";
+        throw error.response?.data?.detail || "Authentication failed";
     }
 };
 
@@ -27,11 +32,51 @@ export const getUser = async () => {
         return response.data;
     } catch (error) {
         console.error("user details request failed:", error.response?.data || error.message);
-        //throw error.response?.data?.detail || "Cant get logged in user";
-        return {username : "test"}
+        throw error.response?.data?.detail || "Cant get logged in user";
+        //return {username : "test"}
+    }
+};
+
+export const getUserSync = () => {
+    const token = localStorage.getItem('token');
+    if(token == null){
+        return null;
+    }
+    try {
+        const decodedToken = jwtDecode(token);
+        console.log('token decode')
+        const currentTime = Date.now() / 1000; // Convert to seconds
+        if(decodedToken.exp > currentTime){
+            return {
+                email: decodedToken.sub
+            }
+        }
+        return null;
+        
+
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null; // Treat as expired if decoding fails
     }
 };
 
 export const logout = () => {
     localStorage.removeItem('token');
+};
+
+
+export const verify = () => {
+    const token = localStorage.getItem('token');
+    try {
+        const decodedToken = jwtDecode(token);
+        console.log('token decode')
+        const currentTime = Date.now() / 1000; // Convert to seconds
+        return decodedToken.exp > currentTime
+        
+
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return false; // Treat as expired if decoding fails
+    }
+
 };

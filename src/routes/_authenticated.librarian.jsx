@@ -1,7 +1,4 @@
-import { useState } from 'react'
-import Login from '../components/login'
-import Stats from '../components/stats'
-import PropTypes from 'prop-types';
+
 import { createFileRoute } from '@tanstack/react-router'
 import configData from "../config.json";
 
@@ -202,7 +199,7 @@ function Librarian() {
   )
 }
 
-export const Route = createFileRoute('/librarian')({
+export const Route = createFileRoute('/_authenticated/librarian')({
   component: Librarian,
 })
 

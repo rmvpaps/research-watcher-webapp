@@ -10,73 +10,83 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as LibrarianRouteImport } from './routes/librarian'
-import { Route as PaperRouteImport } from './routes/paper'
-import { Route as SearchRouteImport } from './routes/search'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
+import { Route as AuthenticatedLibrarianRouteImport } from './routes/_authenticated.librarian'
+import { Route as AuthenticatedSearchRouteImport } from './routes/_authenticated.search'
+import { Route as AuthenticatedPaperIdRouteImport } from './routes/_authenticated.paper.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const LibrarianRoute = LibrarianRouteImport.update({
+const AuthenticatedLibrarianRoute = AuthenticatedLibrarianRouteImport.update({
   id: '/librarian',
   path: '/librarian',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const PaperRoute = PaperRouteImport.update({
-  id: '/paper',
-  path: '/paper',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SearchRoute = SearchRouteImport.update({
+const AuthenticatedSearchRoute = AuthenticatedSearchRouteImport.update({
   id: '/search',
   path: '/search',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPaperIdRoute = AuthenticatedPaperIdRouteImport.update({
+  id: '/paper/$id',
+  path: '/paper/$id',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/librarian': typeof LibrarianRoute
-  '/paper': typeof PaperRoute
-  '/search': typeof SearchRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/librarian': typeof AuthenticatedLibrarianRoute
+  '/search': typeof AuthenticatedSearchRoute
+  '/paper/$id': typeof AuthenticatedPaperIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/librarian': typeof LibrarianRoute
-  '/paper': typeof PaperRoute
-  '/search': typeof SearchRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/librarian': typeof AuthenticatedLibrarianRoute
+  '/search': typeof AuthenticatedSearchRoute
+  '/paper/$id': typeof AuthenticatedPaperIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/librarian': typeof LibrarianRoute
-  '/paper': typeof PaperRoute
-  '/search': typeof SearchRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/librarian': typeof AuthenticatedLibrarianRoute
+  '/_authenticated/search': typeof AuthenticatedSearchRoute
+  '/_authenticated/paper/$id': typeof AuthenticatedPaperIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/librarian' | '/paper' | '/search'
+  fullPaths: '/' | '/dashboard' | '/librarian' | '/search' | '/paper/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/librarian' | '/paper' | '/search'
-  id: '__root__' | '/' | '/dashboard' | '/librarian' | '/paper' | '/search'
+  to: '/' | '/dashboard' | '/librarian' | '/search' | '/paper/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/librarian'
+    | '/_authenticated/search'
+    | '/_authenticated/paper/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  LibrarianRoute: typeof LibrarianRoute
-  PaperRoute: typeof PaperRoute
-  SearchRoute: typeof SearchRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -88,43 +98,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/librarian': {
-      id: '/librarian'
+    '/_authenticated/librarian': {
+      id: '/_authenticated/librarian'
       path: '/librarian'
       fullPath: '/librarian'
-      preLoaderRoute: typeof LibrarianRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedLibrarianRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/paper': {
-      id: '/paper'
-      path: '/paper'
-      fullPath: '/paper'
-      preLoaderRoute: typeof PaperRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/search': {
-      id: '/search'
+    '/_authenticated/search': {
+      id: '/_authenticated/search'
       path: '/search'
       fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedSearchRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/paper/$id': {
+      id: '/_authenticated/paper/$id'
+      path: '/paper/$id'
+      fullPath: '/paper/$id'
+      preLoaderRoute: typeof AuthenticatedPaperIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedLibrarianRoute: typeof AuthenticatedLibrarianRoute
+  AuthenticatedSearchRoute: typeof AuthenticatedSearchRoute
+  AuthenticatedPaperIdRoute: typeof AuthenticatedPaperIdRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedLibrarianRoute: AuthenticatedLibrarianRoute,
+  AuthenticatedSearchRoute: AuthenticatedSearchRoute,
+  AuthenticatedPaperIdRoute: AuthenticatedPaperIdRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
-  LibrarianRoute: LibrarianRoute,
-  PaperRoute: PaperRoute,
-  SearchRoute: SearchRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

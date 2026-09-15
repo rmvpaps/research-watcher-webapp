@@ -1,14 +1,21 @@
 import { useState } from 'react'
-import Login from '../components/login'
-import Stats from '../components/stats'
+import Login from '@/components/login'
+import Stats from '@/components/stats'
 import PropTypes from 'prop-types';
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import configData from "../config.json";
-
+import { getStats } from '@/api/article';
+import {
+  useQuery
+} from '@tanstack/react-query'
 
 function Landing() {
   const {teamName, desc, githublink} = configData
-  const stats = {monthCt:800, dayCt:98, totalRelCt: 46, totalCt: 3400}
+  const { isPending, isError, data, error }  = useQuery({ queryKey: ['stats'], queryFn: getStats })
+
+
+  
+  const stats = {...data}
   return (
     <>
     <div className='bg-white mx-auto w-full max-w-6xl flex-grow flex items-center justify-center p-margin-mobile md:p-gutter shadow-2xl'>
@@ -31,7 +38,7 @@ function Landing() {
                 </a>
               </div>
             </div>
-          <Stats stat={stats}/>
+          {!isPending &&!isError && < Stats stat={stats}/>}
           </div>
           
           
@@ -46,6 +53,16 @@ function Landing() {
 
 export const Route = createFileRoute('/')({
   component: Landing,
+    beforeLoad: ({ context }) => {
+    // 2. Check if the user is logged in
+    if (context.user) {
+      // 3. Redirect them immediately to the login page
+      throw redirect({
+        to: '/dashboard'
+
+      })
+    }
+  },
 })
 
 

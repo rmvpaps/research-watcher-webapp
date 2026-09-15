@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types';
-import {login} from '@/api/auth'
+import {useAuth} from '@/context/AuthContext'
 import { useNavigate } from '@tanstack/react-router'
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [loginError,setLoginError] = useState(false)
+    const [loginErrorMessage,setLoginErrorMessage] = useState('')
+    const { isAuthenticating, logincallback } = useAuth();
     const navigate = useNavigate()
 
 
@@ -15,13 +17,14 @@ function Login() {
         setLoginError(false)
         setLoading(true);
         try {
-            await login(email, password);
+            await logincallback(email, password);
             setLoading(false);
             navigate({ to: '/dashboard' })
 
         } catch (err) {
             console.log(err)
             setLoginError(true)
+            setLoginErrorMessage(err)
         }
         finally {
             setLoading(false);
@@ -39,22 +42,22 @@ function Login() {
                             </div>
                             <form  className="space-y-6" onSubmit={handleLogin}>
                                 <div>
-                                    <label className="block font-meta-sm text-meta-sm text-secondary mb-1" for="email">Email</label>
+                                    <label className="block font-meta-sm text-meta-sm text-secondary mb-1" htmlFor="email">Email</label>
                                     <input className="w-full px-4 py-3 rounded-lg border border-outline-blue bg-white focus:border-primary focus:ring-1 focus:ring-primary text-on-surface font-body-md placeholder:text-outline outline-none transition-colors" id="email" name="email" placeholder="researcher@university.edu" required="" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                                 </div>
                                 <div>
-                                    <label className="block font-meta-sm text-meta-sm text-secondary mb-1" for="password">Password</label>
+                                    <label className="block font-meta-sm text-meta-sm text-secondary mb-1" htmlFor="password">Password</label>
                                     <input className="w-full px-4 py-3 rounded-lg border border-outline-blue bg-white focus:border-primary focus:ring-1 focus:ring-primary text-on-surface font-body-md placeholder:text-outline outline-none transition-colors" id="password" name="password" placeholder="••••••••" required="" type="password"value={password} onChange={e => setPassword(e.target.value)} />
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                         <input className="h-4 w-4 rounded border-outline-blue text-primary focus:ring-primary" id="remember-me" name="remember-me" type="checkbox" />
-                                        <label className="ml-2 block font-body-md text-body-md text-on-surface-variant" for="remember-me">Remember me</label>
+                                        <label className="ml-2 block font-body-md text-body-md text-on-surface-variant" htmlFor="remember-me">Remember me</label>
                                     </div>
                                     <a className="font-meta-sm text-meta-sm text-primary hover:text-primary-container transition-colors" href="#">Forgot password?</a>
                                 </div>
                                 { loginError && <div className="flex items-center justify-between bg-error-container">
-                                    <p className='text-black font-meta-sm '>Error: Could not log in</p>
+                                    <p className='text-black font-meta-sm '>Error: { loginErrorMessage }</p>
                                     </div>}
                                 <button className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-headline-sm text-headline-sm text-white bg-primary hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" type="submit" disabled={loading}>
                                     Sign In
