@@ -1,16 +1,44 @@
-# React + Vite
+# Research Watcher Web app - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Research watcher is a helper to a researcher which checks the scientific sites for abstracts on new papers in a given category, checks if it is related to the research domain, then if relevant, get full content, index it for searching and show in users dashboard. User can also leverage LLM to answer questions on a given paper or across multiple indexed papers.
 
-Currently, two official plugins are available:
+Currently only supports ArXiv
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Project under development
 
-## React Compiler
+Backend available here - https://github.com/rmvpaps/vton-research-watcher
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## React + Vite
 
-## Expanding the ESLint configuration
+Built on reactjs, vite, tanstack
+Update .env with backend url
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```npm run dev``` for development server. 
+Do not forget to add CORS in the backend!
+
+## Tasks
+
++ [ ] Basic Responsive web app design(html,css tailwind)- with Google stitch
+    - [X] Login Page
+    - [X] Dashboard
+    - [X] Individual Page
+    - [ ] Search
+    - [X] Assistant
+    - [ ] Settings
+
++ [ ] Generic
+    - [X] Tanstack router
+    - [X] Auth context
+
++ [ ] Backend integration
+    - [X] Login Page
+    - [X] Dashboard
+    - [X] Individual Page
+    - [ ] Search
+    - [ ] Assistant
+    - [ ] Settings
+
+
++ [ ] To be updated....
+
+
