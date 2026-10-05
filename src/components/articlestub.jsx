@@ -16,17 +16,20 @@ function ArticleStub({ articleItem }) {
 
             </div>
             <a href={`/paper/${articleItem.id}`}><h2 className="font-headline-sm text-headline-sm text-tertiary mb-2 pr-24">{articleItem.title}</h2></a>
-            <p className="font-meta-sm text-meta-sm text-on-surface-variant mb-4">{articleItem?.author} • Published: {articleItem?.days} • {articleItem.category}</p>
+            <p className="font-meta-sm text-meta-sm text-on-surface-variant mb-4">{articleItem?.authors?.join(', ')} </p>
+            <p className="font-meta-sm text-meta-sm text-on-surface-variant mb-4">Published: {articleItem?.published_at} • {articleItem.source}</p>
             <p className="font-body-md text-body-md text-on-surface mb-6 line-clamp-3">
               {articleItem.abstract}
             </p>
+
             <div className="flex flex-wrap items-center gap-2 mt-auto">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E1E9F0] text-[#4A6B8A] font-meta-sm text-meta-sm">Transformers</span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E1E9F0] text-[#4A6B8A] font-meta-sm text-meta-sm">Attention Mechanism</span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E1E9F0] text-[#4A6B8A] font-meta-sm text-meta-sm">Deep Learning</span>
-              <button className="font-meta-sm text-meta-sm text-primary hover:underline ml-2">+2 more keywords</button>
+              {articleItem?.keywords?.map((keyword, index) => (
+                <span key={index} className="inline-flex items-center px-3 py-1 rounded-full bg-[#E1E9F0] text-[#4A6B8A] font-meta-sm text-meta-sm">{keyword}</span>
+              ))}
+              {/* <button className="font-meta-sm text-meta-sm text-primary hover:underline ml-2">+{article.keywords.length - 3} more keywords</button> */}
             </div>
           </article>
+
 
 
         </>
@@ -37,10 +40,11 @@ function ArticleStub({ articleItem }) {
 ArticleStub.propTypes = {
   articleItem: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    author : PropTypes.string,
+    authors : PropTypes.arrayOf(PropTypes.string),
     score : PropTypes.number.isRequired,
-    days : PropTypes.string,
-    category : PropTypes.string,
+    published_at : PropTypes.string,
+    keywords : PropTypes.arrayOf(PropTypes.string),
+    source : PropTypes.string,
     abstract : propTypes.string.isRequired
 
   }).isRequired,

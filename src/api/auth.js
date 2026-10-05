@@ -4,13 +4,13 @@ import {jwtDecode} from 'jwt-decode';
 export const login = async (username, password) => {
     try {
         // 🟢 Send credentials as clean JSON matching your Pydantic schema
-        const response = await apiClient.post('/v1/token', { username, password });
+        const response = await apiClient.post('/v1/token', { username, password },{withCredentials:true});
 
-        const { access_token } = response.data;
+        const { access_token, refresh_token, token_type } = response.data;
 
         // Save the asset string safely in the browser context layer
         localStorage.setItem('token', access_token);
-        
+        localStorage.setItem('refresh',refresh_token)
 
         const user = await getUser()
 
@@ -27,6 +27,7 @@ export const login = async (username, password) => {
 export const getUser = async () => {
     try {
         // 🟢 Send credentials as clean JSON matching your Pydantic schema
+        console.log("getUser")
         const response = await apiClient.get('/v1/users/me');
 
         return response.data;
@@ -62,14 +63,15 @@ export const getUserSync = () => {
 
 export const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('refresh')
 };
 
 
-export const verify = () => {
-    const token = localStorage.getItem('token');
+export const verify = (token) => {
+
     try {
         const decodedToken = jwtDecode(token);
-        console.log('token decode')
+        console.log('token verify local')
         const currentTime = Date.now() / 1000; // Convert to seconds
         return decodedToken.exp > currentTime
         
@@ -79,4 +81,32 @@ export const verify = () => {
         return false; // Treat as expired if decoding fails
     }
 
+};
+
+
+
+export const getRefresh = async (refresh_token) => {
+    try {
+        // 🟢 Send credentials as clean JSON matching your Pydantic schema
+        console.log("getRefresh")
+
+        const response = await apiClient.post('/v1/refresh-token',{refresh_token:refresh_token},{withCredentials:true});
+
+        const { access_token, refresh_token:new_refresh_token, token_type } = response.data;
+        console.log("updating tokens",access_token,new_refresh_token)
+        // Save the asset string safely in the browser context layer
+        localStorage.setItem('token', access_token);
+        localStorage.setItem('refresh',new_refresh_token)
+
+        
+
+        const user = await getUser()
+
+        return user
+
+    } catch (error) {
+        console.error("user details request failed:", error.response?.data || error.message);
+        throw error.response?.data?.detail || "Cant get logged in user";
+        //return {username : "test"}
+    }
 };

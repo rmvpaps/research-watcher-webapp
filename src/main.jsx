@@ -15,6 +15,7 @@ const router = createRouter({
   context : {
     user : null,
     isLoggedIn: false,
+    isAuthenticating: true,
     logincallback : () => alert('Logged in!'),
     logoutcallback : () => alert('Logged out!'),
 
@@ -33,7 +34,14 @@ const router = createRouter({
 
 function AppInner() {
   const auth = useAuth() // Grab values from your AuthProvider
-
+  if (auth.isAuthenticating) {
+      return (
+        <div className="flex h-screen w-screen items-center justify-center bg-slate-900 text-white">
+          <p>Restoring your session...</p>
+        </div>
+      );
+    }
+    
   // Pass dynamic context state straight down to the router tree
   return <RouterProvider router={router} context={{ ...auth }} />
 }

@@ -7,7 +7,7 @@ export const Route = createFileRoute('/_authenticated')({
     //alert("protected route")
     // 2. Check if the user is logged in
     //console.log(context)
-    if (!context.user) {
+    if (!context.isLoggedIn) {
       // 3. Redirect them immediately to the login page
       throw redirect({
         to: '/',
